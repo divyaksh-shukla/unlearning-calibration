@@ -1,0 +1,62 @@
+[
+    {
+        "task": "relu_phi-1_5_full_retain90",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.6516290726817042,
+        "f1": 0.6503700028183328,
+        "brier": 0.5390729436817128,
+        "ece": 0.2275017780767646,
+        "mce": 0.8647355735301971
+    },
+    {
+        "task": "relu_phi-1_5_full_retain90",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.6444444444444445,
+        "f1": 0.6459239814029459,
+        "brier": 0.5588852458920248,
+        "ece": 0.21984331230322524,
+        "mce": 0.6967295408248901
+    },
+    {
+        "task": "relu_phi-1_5_pretrained_retain90",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.3007518796992481,
+        "f1": 0.17671098788950027,
+        "brier": 1.0782951767235327,
+        "ece": 0.48371283825776334,
+        "mce": 0.8141652080747817
+    },
+    {
+        "task": "relu_phi-1_5_pretrained_retain90",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.25805555555555554,
+        "f1": 0.1405336606159558,
+        "brier": 1.183406320258395,
+        "ece": 0.5361805243459012,
+        "mce": 0.7655821156998476
+    },
+    {
+        "task": "relu_phi-1_5_retain90_batch1",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.6516290726817042,
+        "f1": 0.6503700028183328,
+        "brier": 0.5390732442160779,
+        "ece": 0.22750197100758845,
+        "mce": 0.864737331867218
+    },
+    {
+        "task": "relu_phi-1_5_retain90_batch1",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.6444444444444445,
+        "f1": 0.6459239814029459,
+        "brier": 0.5588851982338543,
+        "ece": 0.22013785805967123,
+        "mce": 0.6967281401157379
+    }
+]

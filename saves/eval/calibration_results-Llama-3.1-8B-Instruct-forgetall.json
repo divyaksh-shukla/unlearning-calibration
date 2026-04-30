@@ -1,0 +1,182 @@
+[
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_pretrained_retain90_nochat",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.7183333333333334,
+        "f1": 0.7194689921069646,
+        "brier": 0.3664853974782818,
+        "ece": 0.063824581189288,
+        "mce": 0.7353657782077789
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_pretrained_retain90_nochat",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.7268170426065163,
+        "f1": 0.7241532836106872,
+        "brier": 0.35924519396317345,
+        "ece": 0.12075670709586081,
+        "mce": 0.8721197247505188
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_pretrained_retain95_nochat",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.7175572519083969,
+        "f1": 0.7183116607207667,
+        "brier": 0.3615503949729745,
+        "ece": 0.06300752739995431,
+        "mce": 0.734395295381546
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_pretrained_retain95_nochat",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.66,
+        "f1": 0.6527257626094836,
+        "brier": 0.4152526714132971,
+        "ece": 0.17234279379248618,
+        "mce": 0.8627278208732605
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_pretrained_retain99_nochat",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.7183632230361202,
+        "f1": 0.7186028874544506,
+        "brier": 0.3614227775398105,
+        "ece": 0.06327980949469784,
+        "mce": 0.2751275531707272
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_pretrained_retain99_nochat",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.7,
+        "f1": 0.6779396233057561,
+        "brier": 0.36303070218368677,
+        "ece": 0.20998715758323672,
+        "mce": 0.735141932964325
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_full_retain90_nochat",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.8341666666666666,
+        "f1": 0.834911227857935,
+        "brier": 0.24607064225735475,
+        "ece": 0.09473633173439241,
+        "mce": 0.5785159667332967
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_full_retain90_nochat",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.8320802005012531,
+        "f1": 0.8275527536138211,
+        "brier": 0.2622884060256704,
+        "ece": 0.1329946900370127,
+        "mce": 0.8830397129058838
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_full_retain95_nochat",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.8389049749934193,
+        "f1": 0.8390406000816164,
+        "brier": 0.24234526083664795,
+        "ece": 0.08978409810610961,
+        "mce": 0.6923432946205139
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_full_retain95_nochat",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.805,
+        "f1": 0.800231761000262,
+        "brier": 0.3037300260696611,
+        "ece": 0.16788165464997293,
+        "mce": 0.8775900602340698
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_full_retain99_nochat",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.8383430159131093,
+        "f1": 0.8385304821575643,
+        "brier": 0.24508110259064025,
+        "ece": 0.09132244287942752,
+        "mce": 0.6117887794971466
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_full_retain99_nochat",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.85,
+        "f1": 0.8335227272727272,
+        "brier": 0.1546780652466716,
+        "ece": 0.12096520960330964,
+        "mce": 0.7545320987701416
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_retain90_nochat",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.8336111111111111,
+        "f1": 0.8343579786407925,
+        "brier": 0.24780319045559066,
+        "ece": 0.09200772457652621,
+        "mce": 0.6615832448005676
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_retain90_nochat",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.7593984962406015,
+        "f1": 0.7556889611101352,
+        "brier": 0.374135103336421,
+        "ece": 0.16800666415601742,
+        "mce": 0.8246212601661682
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_retain95_nochat",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.8433798367991576,
+        "f1": 0.8434389126638426,
+        "brier": 0.24088229529163818,
+        "ece": 0.08878930020125239,
+        "mce": 0.4860493540763855
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_retain95_nochat",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.745,
+        "f1": 0.7408768560129151,
+        "brier": 0.4069873057782363,
+        "ece": 0.19832207560539244,
+        "mce": 0.9044880867004395
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_retain99_nochat",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.8383430159131093,
+        "f1": 0.8384077622870153,
+        "brier": 0.2401434795071502,
+        "ece": 0.08586228895771533,
+        "mce": 0.6564069092273712
+    },
+    {
+        "task": "relu_Llama-3.1-8B-Instruct_retain99_nochat",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.75,
+        "f1": 0.7334224598930481,
+        "brier": 0.31931050458575205,
+        "ece": 0.2023956924676895,
+        "mce": 0.975918173789978
+    }
+]
