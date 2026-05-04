@@ -8,4 +8,4 @@ pip install cmake
 
 pip install flash-attn==2.8.3 --no-build-isolation
 
-pip install -r requirements_2026.txt
+pip install -r requirements.txt
