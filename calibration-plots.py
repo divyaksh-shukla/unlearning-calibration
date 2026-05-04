@@ -208,6 +208,204 @@ def print_metrics_and_plot(path, title, subfig_nrows=None, subfig_ncols=None, su
 # %% [markdown]
 # # Phi
 
+# %% [markdown]
+# ## Forget 10%
+
+# %%
+# model_name = "Llama-3.1-8B-Instruct"
+model_name = "phi-1_5"
+path_template = "saves/eval/{task_name}/RELU_EVAL.json"
+unlearn_path_template = "saves/unlearn/{task_name}/{checkpoint}/evals/RELU_EVAL.json"
+tasks = [    
+    ("relu_{model_name}_full_retain90", "Full Finetuned 10%"),
+    ("relu_{model_name}_pretrained_retain90", "Pretrained 10%"),
+    ("relu_{model_name}_retain90_batch1", "Retained 10%"),
+]
+
+unlearn_tasks = [
+    # ("tofu_{model_name}_forget01_GradAscent", "checkpoint-2", "GradAscent 1%"),
+    # ("tofu_{model_name}_forget01_GradAscent", "checkpoint-5", "GradAscent 1%"),
+    # ("tofu_{model_name}_forget01_GradAscent", "checkpoint-7", "GradAscent 1%"),
+    # ("tofu_{model_name}_forget01_GradAscent", "checkpoint-10", "GradAscent 1%"),
+    
+    # ("tofu_{model_name}_forget01_GradDiff", "checkpoint-2", "GradDiff 1%"),
+    # ("tofu_{model_name}_forget01_GradDiff", "checkpoint-5", "GradDiff 1%"),
+    # ("tofu_{model_name}_forget01_GradDiff", "checkpoint-7", "GradDiff 1%"),
+    # ("tofu_{model_name}_forget01_GradDiff", "checkpoint-10", "GradDiff 1%"),
+    
+    # ("tofu_{model_name}_forget01_NPO", "checkpoint-2", "NPO 1%"),
+    # ("tofu_{model_name}_forget01_NPO", "checkpoint-5", "NPO 1%"),
+    # ("tofu_{model_name}_forget01_NPO", "checkpoint-7", "NPO 1%"),
+    # ("tofu_{model_name}_forget01_NPO", "checkpoint-10", "NPO 1%"),
+    
+    # ("tofu_{model_name}_forget01_DPO", "checkpoint-2", "DPO 1%"),
+    # ("tofu_{model_name}_forget01_DPO", "checkpoint-5", "DPO 1%"),
+    # ("tofu_{model_name}_forget01_DPO", "checkpoint-7", "DPO 1%"),
+    # ("tofu_{model_name}_forget01_DPO", "checkpoint-10", "DPO 1%"),
+]
+
+results = []
+
+for task, task_name in tasks:
+    task = task.format(model_name=model_name)
+    try:
+        print(f"=== {task} ===")
+        metrics = print_metrics_and_plot(path_template.format(task_name=task), title=task_name)
+        for m in metrics:
+            results.append({"task": task, "checkpoint": 0, **m})
+    except Exception as e:
+        print(f"Error processing {task}: {e}")
+        raise e
+
+for task, checkpoint, method in unlearn_tasks:
+    task = task.format(model_name=model_name)
+    try:
+        print(f"=== {task} | {checkpoint} ===")
+        metrics = print_metrics_and_plot(unlearn_path_template.format(task_name=task, checkpoint=checkpoint), title=method)
+        for m in metrics:
+            results.append({"task": task, "checkpoint": checkpoint, **m})
+    except Exception as e:
+        print(f"Error processing {task}|{checkpoint}: {e}")
+        raise e
+    
+
+df = pd.DataFrame(results)
+# store all the results in a JSON file
+with open("saves/eval/calibration_results_phi-1_5_forget10.json", "w") as f:
+    json.dump(results, f, indent=4)
+
+
+# %% [markdown]
+# ## Forget 5%
+
+# %%
+model_name = "phi-1_5"
+path_template = "saves/eval/{task_name}/RELU_EVAL.json"
+unlearn_path_template = "saves/unlearn/{task_name}/{checkpoint}/evals/RELU_EVAL.json"
+tasks = [    
+    ("relu_{model_name}_full_retain95", "Full Finetuned 5%"),
+    ("relu_{model_name}_pretrained_retain95", "Pretrained 5%"),
+    ("relu_{model_name}_retain95", "Retained 5%"),
+]
+
+unlearn_tasks = [
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradAscent", "checkpoint-2", "GradAscent 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradAscent", "checkpoint-5", "GradAscent 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradAscent", "checkpoint-7", "GradAscent 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradAscent", "checkpoint-10", "GradAscent 1%"),
+    
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradDiff", "checkpoint-2", "GradDiff 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradDiff", "checkpoint-5", "GradDiff 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradDiff", "checkpoint-7", "GradDiff 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradDiff", "checkpoint-10", "GradDiff 1%"),
+    
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_NPO", "checkpoint-2", "NPO 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_NPO", "checkpoint-5", "NPO 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_NPO", "checkpoint-7", "NPO 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_NPO", "checkpoint-10", "NPO 1%"),
+    
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_DPO", "checkpoint-2", "DPO 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_DPO", "checkpoint-5", "DPO 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_DPO", "checkpoint-7", "DPO 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_DPO", "checkpoint-10", "DPO 1%"),
+]
+
+results = []
+
+for task, task_name in tasks:
+    task = task.format(model_name=model_name)
+    try:
+        print(f"=== {task} ===")
+        metrics = print_metrics_and_plot(path_template.format(task_name=task), title=task_name)
+        for m in metrics:
+            results.append({"task": task, "checkpoint": 0, **m})
+    except Exception as e:
+        print(f"Error processing {task}: {e}")
+        raise e
+
+for task, checkpoint, method in unlearn_tasks:
+    task = task.format(model_name=model_name)
+    try:
+        print(f"=== {task} | {checkpoint} ===")
+        metrics = print_metrics_and_plot(unlearn_path_template.format(task_name=task, checkpoint=checkpoint), title=method)
+        for m in metrics:
+            results.append({"task": task, "checkpoint": checkpoint, **m})
+    except Exception as e:
+        print(f"Error processing {task}|{checkpoint}: {e}")
+        raise e
+    
+
+df = pd.DataFrame(results)
+# store all the results in a JSON file
+with open("saves/eval/calibration_results-phi_1_5-forget05.json", "w") as f:
+    json.dump(results, f, indent=4)
+
+
+# %% [markdown]
+# ## Forget 1%
+
+# %%
+model_name = "phi-1_5"
+path_template = "saves/eval/{task_name}/RELU_EVAL.json"
+unlearn_path_template = "saves/unlearn/{task_name}/{checkpoint}/evals/RELU_EVAL.json"
+tasks = [    
+    ("relu_{model_name}_full_retain99", "Full Finetuned 1%"),
+    ("relu_{model_name}_pretrained_retain99", "Pretrained 1%"),
+    ("relu_{model_name}_retain99", "Retained 1%"),
+]
+
+unlearn_tasks = [
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradAscent", "checkpoint-2", "GradAscent 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradAscent", "checkpoint-5", "GradAscent 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradAscent", "checkpoint-7", "GradAscent 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradAscent", "checkpoint-10", "GradAscent 1%"),
+    
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradDiff", "checkpoint-2", "GradDiff 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradDiff", "checkpoint-5", "GradDiff 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradDiff", "checkpoint-7", "GradDiff 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_GradDiff", "checkpoint-10", "GradDiff 1%"),
+    
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_NPO", "checkpoint-2", "NPO 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_NPO", "checkpoint-5", "NPO 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_NPO", "checkpoint-7", "NPO 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_NPO", "checkpoint-10", "NPO 1%"),
+    
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_DPO", "checkpoint-2", "DPO 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_DPO", "checkpoint-5", "DPO 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_DPO", "checkpoint-7", "DPO 1%"),
+    # ("tofu_Llama-3.1-8B-Instruct_forget01_DPO", "checkpoint-10", "DPO 1%"),
+]
+
+results = []
+
+for task, task_name in tasks:
+    task = task.format(model_name=model_name)
+    try:
+        print(f"=== {task} ===")
+        metrics = print_metrics_and_plot(path_template.format(task_name=task), title=task_name)
+        for m in metrics:
+            results.append({"task": task, "checkpoint": 0, **m})
+    except Exception as e:
+        print(f"Error processing {task}: {e}")
+        raise e
+
+for task, checkpoint, method in unlearn_tasks:
+    task = task.format(model_name=model_name)
+    try:
+        print(f"=== {task} | {checkpoint} ===")
+        metrics = print_metrics_and_plot(unlearn_path_template.format(task_name=task, checkpoint=checkpoint), title=method)
+        for m in metrics:
+            results.append({"task": task, "checkpoint": checkpoint, **m})
+    except Exception as e:
+        print(f"Error processing {task}|{checkpoint}: {e}")
+        raise e
+    
+
+df = pd.DataFrame(results)
+# store all the results in a JSON file
+with open("saves/eval/calibration_results-phi_1_5-forget01.json", "w") as f:
+    json.dump(results, f, indent=4)
+
 
 # %% [markdown]
 # ## Reference models at all forget sizes
@@ -407,18 +605,18 @@ model_name = "Llama-3.2-1B-Instruct"
 path_template = "saves/eval/{task_name}/RELU_EVAL.json"
 unlearn_path_template = "saves/unlearn/{task_name}/{checkpoint}/evals/RELU_EVAL.json"
 tasks = [
-    ("relu_{model_name}_pretrained_retain90_batch32", "Pretrained 10%"),
-    ("relu_{model_name}_pretrained_retain95_batch32", "Pretrained 5%"),
-    ("relu_{model_name}_pretrained_retain99_batch32", "Pretrained 1%"),
+    ("relu_{model_name}_pretrained_retain90_nochat", "Pretrained 10%"),
+    ("relu_{model_name}_pretrained_retain95_nochat", "Pretrained 5%"),
+    ("relu_{model_name}_pretrained_retain99_nochat", "Pretrained 1%"),
 
-    ("relu_{model_name}_full_retain90_batch32", "Full Finetuned 10%"),
-    ("relu_{model_name}_full_retain95_batch32", "Full Finetuned 5%"),
-    ("relu_{model_name}_full_retain99_batch32", "Full Finetuned 1%"),
+    ("relu_{model_name}_full_retain90_nochat", "Full Finetuned 10%"),
+    ("relu_{model_name}_full_retain95_nochat", "Full Finetuned 5%"),
+    ("relu_{model_name}_full_retain99_nochat", "Full Finetuned 1%"),
 
 
-    ("relu_{model_name}_retain90_batch32", "Retained 10%"),
-    ("relu_{model_name}_retain95_batch32", "Retained 5%"),
-    ("relu_{model_name}_retain99_batch32", "Retained 1%"),
+    ("relu_{model_name}_retain90_nochat", "Retained 10%"),
+    ("relu_{model_name}_retain95_nochat", "Retained 5%"),
+    ("relu_{model_name}_retain99_nochat", "Retained 1%"),
 ]
 
 nrows = 3
@@ -443,6 +641,7 @@ df = pd.DataFrame(results)
 # store all the results in a JSON file
 with open(f"saves/eval/calibration_results-{model_name}-forgetall.json", "w") as f:
     json.dump(results, f, indent=4)
+plt.savefig(f"saves/eval/plots/{model_name}_forgetall_reliability_diagram.png", dpi=300, bbox_inches="tight")
 
 
 # %% [markdown]
@@ -453,18 +652,18 @@ model_name = "Llama-3.2-3B-Instruct"
 path_template = "saves/eval/{task_name}/RELU_EVAL.json"
 unlearn_path_template = "saves/unlearn/{task_name}/{checkpoint}/evals/RELU_EVAL.json"
 tasks = [
-    ("relu_{model_name}_pretrained_retain90_batch32", "Pretrained 10%"),
-    ("relu_{model_name}_pretrained_retain95_batch32", "Pretrained 5%"),
-    ("relu_{model_name}_pretrained_retain99_batch32", "Pretrained 1%"),
+    ("relu_{model_name}_pretrained_retain90_nochat", "Pretrained 10%"),
+    ("relu_{model_name}_pretrained_retain95_nochat", "Pretrained 5%"),
+    ("relu_{model_name}_pretrained_retain99_nochat", "Pretrained 1%"),
 
-    ("relu_{model_name}_full_retain90_batch32", "Full Finetuned 10%"),
-    ("relu_{model_name}_full_retain95_batch32", "Full Finetuned 5%"),
-    ("relu_{model_name}_full_retain99_batch32", "Full Finetuned 1%"),
+    ("relu_{model_name}_full_retain90_nochat", "Full Finetuned 10%"),
+    ("relu_{model_name}_full_retain95_nochat", "Full Finetuned 5%"),
+    ("relu_{model_name}_full_retain99_nochat", "Full Finetuned 1%"),
 
 
-    ("relu_{model_name}_retain90_batch32", "Retained 10%"),
-    ("relu_{model_name}_retain95_batch32", "Retained 5%"),
-    ("relu_{model_name}_retain99_batch32", "Retained 1%"),
+    ("relu_{model_name}_retain90_nochat", "Retained 10%"),
+    ("relu_{model_name}_retain95_nochat", "Retained 5%"),
+    ("relu_{model_name}_retain99_nochat", "Retained 1%"),
 ]
 
 nrows = 3
@@ -489,6 +688,8 @@ df = pd.DataFrame(results)
 # store all the results in a JSON file
 with open(f"saves/eval/calibration_results-{model_name}-forgetall.json", "w") as f:
     json.dump(results, f, indent=4)
+
+plt.savefig(f"saves/eval/plots/{model_name}_forgetall_reliability_diagram.png", dpi=300, bbox_inches="tight")
 
 
 # %% [markdown]
@@ -499,18 +700,18 @@ model_name = "Llama-3.1-8B-Instruct"
 path_template = "saves/eval/{task_name}/RELU_EVAL.json"
 unlearn_path_template = "saves/unlearn/{task_name}/{checkpoint}/evals/RELU_EVAL.json"
 tasks = [
-    ("relu_{model_name}_pretrained_retain90_batch32", "Pretrained 10%"),
-    ("relu_{model_name}_pretrained_retain95_batch32", "Pretrained 5%"),
-    ("relu_{model_name}_pretrained_retain99_batch32", "Pretrained 1%"),
+    ("relu_{model_name}_pretrained_retain90_nochat", "Pretrained 10%"),
+    ("relu_{model_name}_pretrained_retain95_nochat", "Pretrained 5%"),
+    ("relu_{model_name}_pretrained_retain99_nochat", "Pretrained 1%"),
 
-    ("relu_{model_name}_full_retain90_batch32", "Full Finetuned 10%"),
-    ("relu_{model_name}_full_retain95_batch32", "Full Finetuned 5%"),
-    ("relu_{model_name}_full_retain99_batch32", "Full Finetuned 1%"),
+    ("relu_{model_name}_full_retain90_nochat", "Full Finetuned 10%"),
+    ("relu_{model_name}_full_retain95_nochat", "Full Finetuned 5%"),
+    ("relu_{model_name}_full_retain99_nochat", "Full Finetuned 1%"),
 
 
-    ("relu_{model_name}_retain90_batch32", "Retained 10%"),
-    ("relu_{model_name}_retain95_batch32", "Retained 5%"),
-    ("relu_{model_name}_retain99_batch32", "Retained 1%"),
+    ("relu_{model_name}_retain90_nochat", "Retained 10%"),
+    ("relu_{model_name}_retain95_nochat", "Retained 5%"),
+    ("relu_{model_name}_retain99_nochat", "Retained 1%"),
 ]
 
 nrows = 3
@@ -535,6 +736,10 @@ df = pd.DataFrame(results)
 # store all the results in a JSON file
 with open(f"saves/eval/calibration_results-{model_name}-forgetall.json", "w") as f:
     json.dump(results, f, indent=4)
+
+plt.savefig(f"saves/eval/plots/{model_name}_forgetall_reliability_diagram.png", dpi=300, bbox_inches="tight")
+
+# %%
 
 
 
