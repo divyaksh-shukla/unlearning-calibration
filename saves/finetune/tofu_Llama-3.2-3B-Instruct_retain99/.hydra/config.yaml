@@ -42,7 +42,7 @@ trainer:
     weight_decay: 0.01
     do_train: true
     do_eval: true
-    eval_on_start: false
+    eval_on_start: true
     eval_strategy: epoch
     num_train_epochs: 5
     seed: 0
@@ -297,7 +297,7 @@ eval:
     forget_split: forget01
     holdout_split: holdout01
     retain_logs_path: ${retain_logs_path}
-    question_key: ${question_key}
+    question_key: question
     batch_size: 32
     retain_split: retain99
 paths:
@@ -306,6 +306,6 @@ paths:
   datasets: ${paths.root_dir}/configs/data/datasets
   output_dir: ${paths.root_dir}/saves/${mode}/${task_name}
   work_dir: ${hydra:runtime.cwd}
-forget_split: forget10
-holdout_split: holdout10
+forget_split: forget01
+holdout_split: holdout01
 retain_logs_path: null

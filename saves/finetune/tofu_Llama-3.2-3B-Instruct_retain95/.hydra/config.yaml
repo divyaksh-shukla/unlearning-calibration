@@ -297,7 +297,7 @@ eval:
     forget_split: forget05
     holdout_split: holdout05
     retain_logs_path: ${retain_logs_path}
-    question_key: ${question_key}
+    question_key: question
     batch_size: 32
     retain_split: retain95
 paths:
@@ -306,6 +306,6 @@ paths:
   datasets: ${paths.root_dir}/configs/data/datasets
   output_dir: ${paths.root_dir}/saves/${mode}/${task_name}
   work_dir: ${hydra:runtime.cwd}
-forget_split: forget10
-holdout_split: holdout10
+forget_split: forget05
+holdout_split: holdout05
 retain_logs_path: null

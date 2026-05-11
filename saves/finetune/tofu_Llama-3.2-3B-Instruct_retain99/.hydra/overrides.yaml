@@ -3,6 +3,9 @@
 - model=Llama-3.2-3B-Instruct
 - data/datasets@data.train=TOFU_QA_retain
 - data.train.TOFU_QA_retain.args.hf_args.name=retain99
+- forget_split=forget01
+- holdout_split=holdout01
+- eval.tofu.question_key=question
 - eval.tofu.forget_split=forget01
 - eval.tofu.retain_split=retain99
 - eval.tofu.holdout_split=holdout01
@@ -10,3 +13,4 @@
 - trainer.args.gradient_accumulation_steps=16
 - trainer.args.ddp_find_unused_parameters=true
 - trainer.args.gradient_checkpointing=true
+- trainer.args.eval_on_start=true

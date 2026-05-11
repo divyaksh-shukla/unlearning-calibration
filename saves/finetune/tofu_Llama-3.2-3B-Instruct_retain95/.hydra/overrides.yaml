@@ -3,6 +3,9 @@
 - model=Llama-3.2-3B-Instruct
 - data/datasets@data.train=TOFU_QA_retain
 - data.train.TOFU_QA_retain.args.hf_args.name=retain95
+- forget_split=forget05
+- holdout_split=holdout05
+- eval.tofu.question_key=question
 - eval.tofu.forget_split=forget05
 - eval.tofu.retain_split=retain95
 - eval.tofu.holdout_split=holdout05

@@ -297,7 +297,7 @@ eval:
     forget_split: forget10
     holdout_split: holdout10
     retain_logs_path: ${retain_logs_path}
-    question_key: ${question_key}
+    question_key: question
     batch_size: 32
     retain_split: retain90
 paths:

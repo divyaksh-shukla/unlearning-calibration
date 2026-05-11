@@ -36,6 +36,9 @@ for split in "${splits[@]}"; do
         model=${model} \
         data/datasets@data.train=TOFU_QA_retain \
         data.train.TOFU_QA_retain.args.hf_args.name=${retain_split} \
+        forget_split=${forget_split} \
+        holdout_split=${holdout_split} \
+        eval.tofu.question_key=question \
         eval.tofu.forget_split=${forget_split} \
         eval.tofu.retain_split=${retain_split} \
         eval.tofu.holdout_split=${holdout_split} \
@@ -43,9 +46,7 @@ for split in "${splits[@]}"; do
         trainer.args.gradient_accumulation_steps=${gradient_accumulation_steps} \
         trainer.args.ddp_find_unused_parameters=true \
         trainer.args.gradient_checkpointing=true
-        # forget_split=${forget_split} \
         # retain_split=${retain_split} \
-        # holdout_split=${holdout_split} \
 
     
         # python src/eval.py experiment=eval/tofu/default.yaml \
