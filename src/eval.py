@@ -25,6 +25,7 @@ def main(cfg: DictConfig):
             "template_args": template_args,
             "model": model,
             "tokenizer": tokenizer,
+            "output_temperature": cfg.get("output_temperature", 1.0),
         }
         _ = evaluator.evaluate(**eval_args)
 

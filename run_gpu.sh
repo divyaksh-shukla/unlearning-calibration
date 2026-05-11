@@ -14,7 +14,8 @@
 set -euo pipefail
 
 # ---------- defaults (edit these for your setup) ----------
-GPU_HOST="172.27.21.97"             # SSH alias or user@host
+# GPU_HOST="172.27.21.97"             # SSH alias or user@host
+GPU_HOST="172.31.100.241"             # SSH alias or user@host
 NAS_ROOT="/DATAX/divyaksh"               # same path on desktop & GPU server
 CONDA_ENV_PATH="${CONDA_ENV_PATH:-/DATA3/divyaksh/miniconda3/envs/open_unlearning}"   # full path to env (prefix-style)
 CODE_DIR="${CODE_DIR:-$NAS_ROOT/Projects/unlearning/unlearning-calibration}"

@@ -5,11 +5,12 @@ echo "Master Port: $MASTER_PORT"
 
 
 models=(
-    "Llama-3.2-1B-Instruct"
-    # "Llama-3.2-3B-Instruct"
+    # "Llama-3.2-1B-Instruct"
+    "Llama-3.2-3B-Instruct"
     # "Llama-3.1-8B-Instruct"
 )
-per_device_train_batch_size=4 # Effective batch size 32 on two GPUs with gradent_accumulation_steps=8
+per_device_train_batch_size=2 
+gradient_accumulation_steps=16 # Effective batch size 32 on one GPUs
 
 splits=(
     "forget01 holdout01 retain99"
@@ -29,22 +30,29 @@ for split in "${splits[@]}"; do
     retain_split=$(echo $split | cut -d' ' -f3)
     
     for model in "${models[@]}"; do
-        # CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file configs/accelerate/default_config.yaml --main_process_port $MASTER_PORT \
-        # src/train.py experiment=finetune/tofu/default.yaml \
-        # task_name=tofu_${model}_${retain_split} \
-        # model=${model} \
-        # data/datasets@data.train=TOFU_QA_retain \
-        # data.train.TOFU_QA_retain.args.hf_args.name=${retain_split} \
-        # trainer.args.per_device_train_batch_size=4 \
-        # trainer.args.ddp_find_unused_parameters=true \
-        # trainer.args.gradient_checkpointing=true
-
-    
-        CUDA_VISIBLE_DEVICES=0 python src/eval.py experiment=eval/tofu/default.yaml \
-        forget_split=${forget_split} \
-        holdout_split=${holdout_split} \
+        accelerate launch --config_file configs/accelerate/default_config.yaml --main_process_port $MASTER_PORT \
+        src/train.py experiment=finetune/tofu/default.yaml \
         task_name=tofu_${model}_${retain_split} \
         model=${model} \
+        data/datasets@data.train=TOFU_QA_retain \
+        data.train.TOFU_QA_retain.args.hf_args.name=${retain_split} \
+        eval.tofu.forget_split=${forget_split} \
+        eval.tofu.retain_split=${retain_split} \
+        eval.tofu.holdout_split=${holdout_split} \
+        trainer.args.per_device_train_batch_size=${per_device_train_batch_size} \
+        trainer.args.gradient_accumulation_steps=${gradient_accumulation_steps} \
+        trainer.args.ddp_find_unused_parameters=true \
+        trainer.args.gradient_checkpointing=true
+        # forget_split=${forget_split} \
+        # retain_split=${retain_split} \
+        # holdout_split=${holdout_split} \
+
+    
+        # python src/eval.py experiment=eval/tofu/default.yaml \
+        # forget_split=${forget_split} \
+        # holdout_split=${holdout_split} \
+        # task_name=tofu_${model}_${retain_split} \
+        # model=${model} \
         # model.model_args.pretrained_model_name_or_path=saves/finetune/tofu_${model}_${retain_split}
     done
 done

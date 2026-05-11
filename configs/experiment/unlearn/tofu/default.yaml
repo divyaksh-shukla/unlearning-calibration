@@ -6,7 +6,7 @@ defaults:
   - override /data: unlearn
   - override /data/datasets@data.forget: TOFU_QA_forget
   - override /data/datasets@data.retain: TOFU_QA_retain
-  - override /eval: relu
+  - override /eval: tofu
 
 model:
   model_args:
@@ -19,18 +19,19 @@ retain_logs_path: null
 question_key: "question"
 
 eval:
-  # tofu:
-  #   forget_split: ${forget_split}
-  #   holdout_split: ${holdout_split}
-  #   retain_logs_path: ${retain_logs_path}
-  #   overwrite: true
-  #   question_key: ${question_key}
-  relu:
+  tofu:
     forget_split: ${forget_split}
     retain_split: ${retain_split}
     holdout_split: ${holdout_split}
     retain_logs_path: ${retain_logs_path}
-    
+    overwrite: true
+    question_key: ${question_key}
+  # relu:
+  #   forget_split: ${forget_split}
+  #   retain_split: ${retain_split}
+  #   holdout_split: ${holdout_split}
+  #   retain_logs_path: ${retain_logs_path}
+  #   overwrite: true
 trainer:
   args:
     warmup_epochs: 1.0 # custom parameter

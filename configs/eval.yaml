@@ -15,3 +15,4 @@ model:
 mode: eval
 task_name: ???
 seed: 0
+output_temperature: 1.0

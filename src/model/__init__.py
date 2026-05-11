@@ -72,6 +72,7 @@ def get_model(model_cfg: DictConfig):
     model_handler = model_cfg.get("model_handler", "AutoModelForCausalLM")
     model_cls = MODEL_REGISTRY[model_handler]
     lora_args = None
+    print(f"Using HF_HOME: {hf_home}, getting model: {model_args.get('pretrained_model_name_or_path', None)}")
     with open_dict(model_args):
         model_path = model_args.pop("pretrained_model_name_or_path", None)
         model_revision = model_args.pop("revision", "main")

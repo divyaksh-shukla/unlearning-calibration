@@ -3,46 +3,58 @@
 export MASTER_PORT=$(python -c "import socket; s=socket.socket(); s.bind(('', 0)); print(s.getsockname()[1]); s.close()")
 echo "Master Port: $MASTER_PORT"
 
+export HF_HOME="/DATA3/divyaksh/.cache/huggingface/hub"
+
 
 models=(
-    # "Llama-3.2-1B-Instruct"
-    # "Llama-3.2-3B-Instruct"
+    "Llama-3.2-1B-Instruct"
+    "Llama-3.2-3B-Instruct"
     "Llama-3.1-8B-Instruct"
 )
 per_device_train_batch_size=4 # Effective batch size 32 on two GPUs with gradent_accumulation_steps=8
 
 splits=(
-    # "forget10 holdout10 retain90"
-    # "forget05 holdout05 retain95"
+    "forget10 holdout10 retain90"
+    "forget05 holdout05 retain95"
     "forget01 holdout01 retain99"
 )
 
-# ########################################################################################################################
-# ############################################ Retained models on ReLU ###################################################
-# ########################################################################################################################
+output_temperatures=(
+    0.7
+    # 1.0
+    1.3
+)
 
-# for split in "${splits[@]}"; do
-#     forget_split=$(echo $split | cut -d' ' -f1)
-#     holdout_split=$(echo $split | cut -d' ' -f2)
-#     retain_split=$(echo $split | cut -d' ' -f3)
-    
-#     for model in "${models[@]}"; do
+########################################################################################################################
+############################################ Retained models on ReLU ###################################################
+########################################################################################################################
 
-#         echo "Evaluating retained ${model} on forget split ${forget_split}, holdout split ${holdout_split}, retain split ${retain_split}"
+for split in "${splits[@]}"; do
+    forget_split=$(echo $split | cut -d' ' -f1)
+    holdout_split=$(echo $split | cut -d' ' -f2)
+    retain_split=$(echo $split | cut -d' ' -f3)
     
-#         CUDA_VISIBLE_DEVICES=0 python src/eval.py \
-#         experiment=eval/relu/default.yaml \
-#         forget_split=${forget_split} \
-#         retain_split=${retain_split} \
-#         holdout_split=${holdout_split} \
-#         eval.relu.forget_split=${forget_split} \
-#         eval.relu.retain_split=${retain_split} \
-#         eval.relu.holdout_split=${holdout_split} \
-#         task_name=relu_${model}_${retain_split}_nochat \
-#         model=${model} \
-#         model.model_args.pretrained_model_name_or_path=open-unlearning/tofu_${model}_${retain_split}
-#     done
-# done
+    for model in "${models[@]}"; do
+
+        for output_temperature in "${output_temperatures[@]}"; do
+
+            echo "Evaluating retained ${model} on forget split ${forget_split}, holdout split ${holdout_split}, retain split ${retain_split} with output temperature ${output_temperature}"
+        
+            python src/eval.py \
+            experiment=eval/relu/default.yaml \
+            forget_split=${forget_split} \
+            retain_split=${retain_split} \
+            holdout_split=${holdout_split} \
+            eval.relu.forget_split=${forget_split} \
+            eval.relu.retain_split=${retain_split} \
+            eval.relu.holdout_split=${holdout_split} \
+            task_name=relu_${model}_${retain_split}_nochat_temp_${output_temperature} \
+            model=${model} \
+            model.model_args.pretrained_model_name_or_path=open-unlearning/tofu_${model}_${retain_split} \
+            output_temperature=${output_temperature}
+        done
+    done
+done
 
 # ########################################################################################################################
 # ########################################### Pretrained models on ReLU ##################################################
@@ -57,7 +69,7 @@ splits=(
 
 #         echo "Evaluating Pretrained ${model} on forget split ${forget_split}, holdout split ${holdout_split}, retain split ${retain_split}"
     
-#         CUDA_VISIBLE_DEVICES=0 python src/eval.py \
+#         python src/eval.py \
 #         experiment=eval/relu/default.yaml \
 #         forget_split=${forget_split} \
 #         retain_split=${retain_split} \
@@ -83,22 +95,26 @@ for split in "${splits[@]}"; do
     
     for model in "${models[@]}"; do
 
-        echo "Evaluating full-finetuned ${model} on forget split ${forget_split}, holdout split ${holdout_split}, retain split ${retain_split}"
-    
-        CUDA_VISIBLE_DEVICES=0 python src/eval.py \
-        experiment=eval/relu/default.yaml \
-        forget_split=${forget_split} \
-        retain_split=${retain_split} \
-        holdout_split=${holdout_split} \
-        eval.relu.forget_split=${forget_split} \
-        eval.relu.retain_split=${retain_split} \
-        eval.relu.holdout_split=${holdout_split} \
-        task_name=relu_${model}_full_${retain_split}_nochat \
-        model=${model} \
-        retain_logs_path=saves/eval/relu_${model}_${retain_split}_nochat/RELU_EVAL.json \
-        model.model_args.pretrained_model_name_or_path=open-unlearning/tofu_${model}_full
-        # model.model_args.pretrained_model_name_or_path=open-unlearning/tofu_${model}_full
-        # model.model_args.pretrained_model_name_or_path=saves/finetune/relu_${model}_${retain_split}
+        for output_temperature in "${output_temperatures[@]}"; do
+
+            echo "Evaluating full-finetuned ${model} on forget split ${forget_split}, holdout split ${holdout_split}, retain split ${retain_split}"
+        
+            python src/eval.py \
+            experiment=eval/relu/default.yaml \
+            forget_split=${forget_split} \
+            retain_split=${retain_split} \
+            holdout_split=${holdout_split} \
+            eval.relu.forget_split=${forget_split} \
+            eval.relu.retain_split=${retain_split} \
+            eval.relu.holdout_split=${holdout_split} \
+            task_name=relu_${model}_full_${retain_split}_nochat_temp_${output_temperature} \
+            model=${model} \
+            retain_logs_path=saves/eval/relu_${model}_${retain_split}_nochat/RELU_EVAL.json \
+            model.model_args.pretrained_model_name_or_path=open-unlearning/tofu_${model}_full \
+            output_temperature=${output_temperature}
+            # model.model_args.pretrained_model_name_or_path=open-unlearning/tofu_${model}_full
+            # model.model_args.pretrained_model_name_or_path=saves/finetune/relu_${model}_${retain_split}
+        done
     done
 done
 

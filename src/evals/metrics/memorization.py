@@ -271,7 +271,8 @@ def extraction_strength(model, **kwargs):
 
 @unlearning_metric(name="mcqa_performance")
 def mcqa_performance(model, **kwargs):
-    """Compute the probabilities by data points and report aggregated average"""
+    """Compute the probabilities by data points and report aggregated average,
+    along with overall accuracy computed from generated vs. ground-truth labels."""
     data = kwargs["data"]
     collator = kwargs["collators"]
     batch_size = kwargs["batch_size"]
@@ -291,5 +292,20 @@ def mcqa_performance(model, **kwargs):
         ]
     )
     prob_values = aggregate_to_1D(prob_values)
-    return {"agg_value": np.mean(prob_values), "value_by_index": scores_by_index}
+
+    # Capture per-example correctness (Exact Match between generated choice and label).
+    # Strings are compared after stripping whitespace to avoid mismatches from leading
+    # spaces in tokenizer-decoded labels (e.g., " A" vs "A").
+    correctness = np.array(
+        [
+            int(evals["generated choice"].strip() == evals["label"].strip())
+            for evals in scores_by_index.values()
+            if evals["generated choice"] is not None and evals["label"] is not None
+        ]
+    )
+
+    return {
+        "agg_value": float(np.mean(correctness)) if len(correctness) > 0 else 0.0,
+        "value_by_index": scores_by_index,
+    }
     

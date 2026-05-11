@@ -1,0 +1,12 @@
+- experiment=finetune/tofu/default.yaml
+- task_name=tofu_Llama-3.2-3B-Instruct_retain99
+- model=Llama-3.2-3B-Instruct
+- data/datasets@data.train=TOFU_QA_retain
+- data.train.TOFU_QA_retain.args.hf_args.name=retain99
+- eval.tofu.forget_split=forget01
+- eval.tofu.retain_split=retain99
+- eval.tofu.holdout_split=holdout01
+- trainer.args.per_device_train_batch_size=2
+- trainer.args.gradient_accumulation_steps=16
+- trainer.args.ddp_find_unused_parameters=true
+- trainer.args.gradient_checkpointing=true

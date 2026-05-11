@@ -340,8 +340,17 @@ def extract_target_texts_from_processed_data(tokenizer, batch):
     return texts
 
 def evaluate_mcqa_score(model, batch, **kwargs):
-    """Evaluate model probabilities and average token-level loss for a given batch."""
+    """Evaluate model probabilities and average token-level loss for a given batch.
+
+    Supports temperature scaling on the option logits before softmax via the
+    `temperature` kwarg. T > 1 softens the distribution (reduces overconfidence),
+    T < 1 sharpens it. T = 1.0 (default) leaves logits unchanged.
+    """
     tokenizer = kwargs.get("tokenizer")
+    temperature = kwargs.get("output_temperature", 1.0)
+    if temperature <= 0:
+        raise ValueError(f"Temperature must be positive, got {temperature}")
+
     batch = {k: v.to(model.device) for k, v in batch.items()}
     with torch.no_grad():
         output = model(**batch)
@@ -352,11 +361,25 @@ def evaluate_mcqa_score(model, batch, **kwargs):
     labels = tokenizer.batch_decode(labels, skip_special_tokens=True)
     option_ids = [tokenizer.encode(f" {chr(65 + i)}")[-1] for i in range(4)]
     option_logits = logits[:, -1, option_ids]
-    option_probs = torch.nn.functional.softmax(option_logits, dim=-1).cpu().float().tolist()
+
+    # Apply temperature scaling before softmax. argmax is invariant to T,
+    # so the predicted choice is unchanged — only the probability distribution is.
+    scaled_option_logits = option_logits / temperature
+    option_probs = torch.nn.functional.softmax(scaled_option_logits, dim=-1).cpu().float().tolist()
     selected_options = torch.argmax(option_logits, dim=-1)
     generated_choices = [f" {chr(65 + option.item())}" for option in selected_options]
-    # breakpoint()
+
     return [
-        {"prob": prob, "logit": logit, "generated choice": generated_choice, "label": label}
-        for prob, logit, generated_choice, label in zip(option_probs, option_logits.cpu().float().tolist(), generated_choices, labels)
+        {
+            "prob": prob,
+            "logit": logit,
+            "generated choice": generated_choice,
+            "label": label,
+        }
+        for prob, logit, generated_choice, label in zip(
+            option_probs,
+            option_logits.cpu().float().tolist(),
+            generated_choices,
+            labels,
+        )
     ]
