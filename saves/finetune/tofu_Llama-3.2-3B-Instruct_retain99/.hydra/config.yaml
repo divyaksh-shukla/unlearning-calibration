@@ -42,7 +42,7 @@ trainer:
     weight_decay: 0.01
     do_train: true
     do_eval: true
-    eval_on_start: true
+    eval_on_start: false
     eval_strategy: epoch
     num_train_epochs: 5
     seed: 0

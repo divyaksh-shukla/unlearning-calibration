@@ -21,12 +21,13 @@ CONDA_ENV_PATH="${CONDA_ENV_PATH:-/DATA3/divyaksh/miniconda3/envs/open_unlearnin
 CODE_DIR="${CODE_DIR:-$NAS_ROOT/Projects/unlearning/unlearning-calibration}"
 LOG_DIR="${LOG_DIR:-$CODE_DIR/tty_logs}"                         # resolved after arg parsing; defaults to $CODE_DIR/logs
 CONDA_SH="${CONDA_SH:-/DATA3/divyaksh/miniconda3/etc/profile.d/conda.sh}"
+HF_HOME="/DATA3/divyaksh/.cache/huggingface/hub"  # HuggingFace cache dir (models, datasets, etc.)
 
 MODE="ssh"            # ssh | detach | live
 SCRIPT=""             # script to run (relative to CODE_DIR or absolute)
 INTERPRETER="python"  # python | bash — how to invoke SCRIPT
 SSH_USER="${SSH_USER:-}"  # SSH username; if set, login as $SSH_USER@$GPU_HOST
-GPU_MEM_THRESHOLD_MB="${GPU_MEM_THRESHOLD_MB:-30000}"  # consider GPU "free" if used <= this
+GPU_MEM_THRESHOLD_MB="${GPU_MEM_THRESHOLD_MB:-46000}"  # consider GPU "free" if used <= this
 
 # ---------- arg parsing ----------
 usage() {
@@ -135,19 +136,21 @@ conda activate "$CONDA_ENV_PATH"
 cd "$CODE_DIR"
 export CUDA_VISIBLE_DEVICES="\$GPU_ID"
 export PYTHONUNBUFFERED=1   # ensure logs flush in real time
+export HF_HOME="$HF_HOME"  # HuggingFace cache dir
 
 # --- run ---
 $INTERPRETER "$SCRIPT" $SCRIPT_ARGS_QUOTED
 EOF
 
 # ---------- launch ----------
-echo "Job:    $JOB_ID"
-echo "Host:   $SSH_TARGET"
-echo "Code:   $CODE_DIR"
-echo "Env:    $CONDA_ENV_PATH"
-echo "Run:    $INTERPRETER $SCRIPT"
-echo "Log:    $LOG_FILE"
-echo "Mode:   $MODE"
+echo "Job:     $JOB_ID"
+echo "Host:    $SSH_TARGET"
+echo "Code:    $CODE_DIR"
+echo "HF_HOME: $HF_HOME"
+echo "Env:     $CONDA_ENV_PATH"
+echo "Run:     $INTERPRETER $SCRIPT"
+echo "Log:     $LOG_FILE"
+echo "Mode:    $MODE"
 echo
 
 case "$MODE" in

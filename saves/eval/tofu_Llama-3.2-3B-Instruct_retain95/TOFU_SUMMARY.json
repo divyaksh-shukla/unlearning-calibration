@@ -1,0 +1,8 @@
+{
+    "forget_mcqa_prob": 0.75,
+    "forget_truth_ratio": 0.6455578482693557,
+    "mia_min_k": 0.34730000000000005,
+    "mia_min_k_plus_plus": 0.408875,
+    "privleak": 30.539999993891985,
+    "retain_mcqa_prob": 0.8357462490128982
+}

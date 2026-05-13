@@ -18,6 +18,8 @@ splits=(
     # "forget01 holdout01 retain99"
 )
 
+export CUDA_VISIBLE_DEVICES=1
+
 
 
 ########################################################################################################################
@@ -31,10 +33,11 @@ for split in "${splits[@]}"; do
     
     for model in "${models[@]}"; do
     
-        CUDA_VISIBLE_DEVICES=0 python src/eval.py experiment=eval/tofu/default.yaml \
+        python src/eval.py experiment=eval/tofu/default.yaml \
         forget_split=${forget_split} \
+        retain_split=${retain_split} \
         holdout_split=${holdout_split} \
-        task_name=tofu_${model}_${retain_split} \
+        task_name=tofu_${model}_${retain_split}_gpu_test \
         model=${model} \
         model.model_args.pretrained_model_name_or_path=locuslab/tofu_ft_${retain_split}_phi-1.5
     done
@@ -52,12 +55,13 @@ for split in "${splits[@]}"; do
     
     for model in "${models[@]}"; do
     
-        CUDA_VISIBLE_DEVICES=0 python src/eval.py experiment=eval/tofu/default.yaml \
+        python src/eval.py experiment=eval/tofu/default.yaml \
         forget_split=${forget_split} \
+        retain_split=${retain_split} \
         holdout_split=${holdout_split} \
-        task_name=tofu_${model}_pretrained_${retain_split} \
+        task_name=tofu_${model}_pretrained_${retain_split}_gpu_test \
         model=${model} \
-        retain_logs_path=saves/eval/tofu_${model}_${retain_split}/TOFU_EVAL.json \
+        retain_logs_path=saves/eval/tofu_${model}_${retain_split}_gpu_test/TOFU_EVAL.json \
         model.model_args.pretrained_model_name_or_path=microsoft/phi-1_5
     done
 done
@@ -74,11 +78,13 @@ for split in "${splits[@]}"; do
     
     for model in "${models[@]}"; do
     
-        CUDA_VISIBLE_DEVICES=0 python src/eval.py experiment=eval/tofu/default.yaml \
+        python src/eval.py experiment=eval/tofu/default.yaml \
         forget_split=${forget_split} \
+        retain_split=${retain_split} \
         holdout_split=${holdout_split} \
-        task_name=tofu_${model}_ft_${retain_split} \
+        task_name=tofu_${model}_ft_${retain_split}_gpu_test \
         model=${model} \
+        retain_logs_path=saves/eval/tofu_${model}_${retain_split}_gpu_test/TOFU_EVAL.json \
         model.model_args.pretrained_model_name_or_path=locuslab/tofu_ft_phi-1.5
     done
 done

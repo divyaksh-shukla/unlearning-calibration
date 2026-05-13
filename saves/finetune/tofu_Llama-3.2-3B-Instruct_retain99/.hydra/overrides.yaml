@@ -13,4 +13,3 @@
 - trainer.args.gradient_accumulation_steps=16
 - trainer.args.ddp_find_unused_parameters=true
 - trainer.args.gradient_checkpointing=true
-- trainer.args.eval_on_start=true

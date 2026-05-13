@@ -201,3 +201,12 @@ saves/unlearn/**/*.bin
 !RELU_EVAL.json
 
 *.pid
+*.safetensors
+training_args.bin
+tokenizer.json
+trainer_state.json
+special_tokens_map.json
+tokenizer_config.json
+generation_config.json
+model.safetensors.index.json
+.hydra/
