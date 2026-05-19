@@ -1,0 +1,9 @@
+defaults:
+  - finetune
+
+handler: GradDiffKLUniform
+method_args:
+  gamma: 1.0
+  alpha: 1.0
+  retain_loss_type: NLL
+  kl_weight: 0.1

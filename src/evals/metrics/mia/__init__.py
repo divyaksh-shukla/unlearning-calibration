@@ -11,6 +11,7 @@ from evals.metrics.mia.min_k_plus_plus import MinKPlusPlusAttack
 from evals.metrics.mia.gradnorm import GradNormAttack
 from evals.metrics.mia.zlib import ZLIBAttack
 from evals.metrics.mia.reference import ReferenceAttack
+from evals.metrics.mia.lira import LiRAAttack
 
 from evals.metrics.mia.utils import mia_auc
 import logging
@@ -29,6 +30,7 @@ def mia_loss(model, **kwargs):
         data=kwargs["data"],
         collator=kwargs["collators"],
         batch_size=kwargs["batch_size"],
+        output_temperature=kwargs.get("output_temperature", 1.0),
     )
 
 
@@ -41,6 +43,7 @@ def mia_min_k(model, **kwargs):
         collator=kwargs["collators"],
         batch_size=kwargs["batch_size"],
         k=kwargs["k"],
+        output_temperature=kwargs.get("output_temperature", 1.0),
     )
 
 
@@ -53,6 +56,7 @@ def mia_min_k_plus_plus(model, **kwargs):
         collator=kwargs["collators"],
         batch_size=kwargs["batch_size"],
         k=kwargs["k"],
+        output_temperature=kwargs.get("output_temperature", 1.0),
     )
 
 
@@ -65,6 +69,7 @@ def mia_gradnorm(model, **kwargs):
         collator=kwargs["collators"],
         batch_size=kwargs["batch_size"],
         p=kwargs["p"],
+        output_temperature=kwargs.get("output_temperature", 1.0),
     )
 
 
@@ -77,6 +82,28 @@ def mia_zlib(model, **kwargs):
         collator=kwargs["collators"],
         batch_size=kwargs["batch_size"],
         tokenizer=kwargs.get("tokenizer"),
+        output_temperature=kwargs.get("output_temperature", 1.0),
+    )
+
+
+@unlearning_metric(name="mia_lira")
+def mia_lira(model, **kwargs):
+    if "reference_model_path" not in kwargs:
+        raise ValueError("Reference model must be provided in kwargs")
+    logger.info(f"Loading reference model from {kwargs['reference_model_path']}")
+    reference_model = AutoModelForCausalLM.from_pretrained(
+        kwargs["reference_model_path"],
+        torch_dtype=model.dtype,
+        device_map={"": model.device},
+    )
+    return mia_auc(
+        LiRAAttack,
+        model,
+        data=kwargs["data"],
+        collator=kwargs["collators"],
+        batch_size=kwargs["batch_size"],
+        reference_model=reference_model,
+        output_temperature=kwargs.get("output_temperature", 1.0),
     )
 
 
@@ -97,4 +124,5 @@ def mia_reference(model, **kwargs):
         collator=kwargs["collators"],
         batch_size=kwargs["batch_size"],
         reference_model=reference_model,
+        output_temperature=kwargs.get("output_temperature", 1.0),
     )

@@ -8,12 +8,13 @@ from evals.metrics.utils import tokenwise_logprobs
 
 
 class MinKProbAttack(Attack):
-    def setup(self, k=0.2, **kwargs):
+    def setup(self, k=0.2, output_temperature=1.0, **kwargs):
         self.k = k
+        self.output_temperature = output_temperature
 
     def compute_batch_values(self, batch):
         """Get token-wise log probabilities for the batch."""
-        return tokenwise_logprobs(self.model, batch, grad=False)
+        return tokenwise_logprobs(self.model, batch, grad=False, output_temperature=self.output_temperature)
 
     def compute_score(self, sample_stats):
         """Score single sample using min-k negative log probs scores attack."""

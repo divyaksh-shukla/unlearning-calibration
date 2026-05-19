@@ -12,13 +12,14 @@ from evals.metrics.utils import (
 
 
 class ZLIBAttack(Attack):
-    def setup(self, tokenizer=None, **kwargs):
+    def setup(self, tokenizer=None, output_temperature=1.0, **kwargs):
         """Setup tokenizer."""
         self.tokenizer = tokenizer or self.model.tokenizer
+        self.output_temperature = output_temperature
 
     def compute_batch_values(self, batch):
         """Get loss and text for batch."""
-        eval_results = evaluate_probability(self.model, batch)
+        eval_results = evaluate_probability(self.model, batch, output_temperature=self.output_temperature)
         texts = extract_target_texts_from_processed_data(self.tokenizer, batch)
         return [{"loss": r["avg_loss"], "text": t} for r, t in zip(eval_results, texts)]
 

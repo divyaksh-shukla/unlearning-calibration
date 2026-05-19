@@ -14,9 +14,9 @@ defaults: # include all defined metrics files
     # - exact_memorization
     - mia_min_k_plus_plus
     - mia_min_k
-    # - mia_loss
-    # - mia_zlib
-    # - mia_gradnorm
+    - mia_loss
+    - mia_zlib
+    - mia_gradnorm
     # - mia_reference # set reference model path appropriately
     # - forget_Q_A_gibberish
     - forget_mcqa_prob
@@ -27,7 +27,7 @@ handler: TOFUEvaluator
 output_dir: ${paths.output_dir} # set to default eval directory
 metrics: {} # lists a mapping from each evaluation metric to its config 
 # populated through the first (@package) line in each metric config
-overwrite: false
+overwrite: true
 forget_split: forget10
 holdout_split: holdout10
 retain_logs_path: null

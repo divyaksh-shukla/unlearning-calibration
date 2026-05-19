@@ -1,0 +1,6 @@
+defaults:
+  - finetune
+
+handler: GradAscentKLUniform
+method_args:
+  kl_weight: 0.1

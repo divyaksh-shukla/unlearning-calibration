@@ -5,6 +5,7 @@ from evals.metrics.mia.zlib import ZLIBAttack
 from evals.metrics.mia.min_k import MinKProbAttack
 from evals.metrics.mia.min_k_plus_plus import MinKPlusPlusAttack
 from evals.metrics.mia.gradnorm import GradNormAttack
+from evals.metrics.mia.lira import LiRAAttack
 
 from sklearn.metrics import roc_auc_score
 
@@ -20,6 +21,7 @@ def get_attacker(attack: str):
         AllAttacks.MIN_K: MinKProbAttack,
         AllAttacks.MIN_K_PLUS_PLUS: MinKPlusPlusAttack,
         AllAttacks.GRADNORM: GradNormAttack,
+        AllAttacks.LIRA: LiRAAttack,
     }
     attack_cls = mapping.get(attack, None)
     if attack_cls is None:

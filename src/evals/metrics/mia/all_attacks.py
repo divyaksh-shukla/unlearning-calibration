@@ -17,6 +17,7 @@ class AllAttacks(str, Enum):
     MIN_K_PLUS_PLUS = "min_k++"
     GRADNORM = "gradnorm"
     RECALL = "recall"
+    LIRA = "lira"
 
 
 # Base attack class

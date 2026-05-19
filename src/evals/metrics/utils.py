@@ -57,7 +57,7 @@ def run_batchwise_evals(model, dataloader, batch_eval_fn, batch_eval_fn_args, ev
         )
         for intra_item_idx, mini_batch in batch.items():
             data_indices = (
-                mini_batch.pop("index").cpu().numpy().tolist()
+                mini_batch.pop("index").float().cpu().numpy().tolist()
             )  # data item indices
             batch_evals = batch_eval_fn(
                 model=model, batch=mini_batch, **batch_eval_fn_args
@@ -79,12 +79,13 @@ def run_batchwise_evals(model, dataloader, batch_eval_fn, batch_eval_fn_args, ev
     return evals
 
 
-def evaluate_probability(model, batch):
+def evaluate_probability(model, batch, **kwargs):
     """Evaluate model probabilities and average token-level loss for a given batch."""
+    temperature = kwargs.get("output_temperature", 1.0)
     batch = {k: v.to(model.device) for k, v in batch.items()}
     with torch.no_grad():
         output = model(**batch)
-    logits = output.logits
+    logits = output.logits / temperature # apply temperature scaling to logits before softmax
     labels = batch["labels"]
     shifted_labels = labels[..., 1:].contiguous()
     logits = logits[..., :-1, :].contiguous()
@@ -95,15 +96,15 @@ def evaluate_probability(model, batch):
     avg_losses = losses / num_token_gt
     normalized_probs = torch.exp(-avg_losses)
 
-    avg_losses = avg_losses.cpu().numpy().tolist()
-    normalized_probs = normalized_probs.cpu().numpy().tolist()
+    avg_losses = avg_losses.float().cpu().numpy().tolist()
+    normalized_probs = normalized_probs.float().cpu().numpy().tolist()
     return [
         {"prob": prob, "avg_loss": avg_loss}
         for prob, avg_loss in zip(normalized_probs, avg_losses)
     ]
 
 
-def tokenwise_logprobs(model, batch, grad=False, return_labels=False):
+def tokenwise_logprobs(model, batch, grad=False, return_labels=False, **kwargs):
     """
     Compute token-wise next token prediction logprobs for all labeled tokens for each sample in a batch.
     `grad` decides whether gradients are turned on
@@ -111,11 +112,12 @@ def tokenwise_logprobs(model, batch, grad=False, return_labels=False):
     log_probs_batch (List[Tensor]): Tensors of size seq_len where seq_len is length of labeled tokens
     labels_batch (List[Tensor]): List of tensors of length N. Returned only if return_labels is True
     """
+    temperature = kwargs.get("output_temperature", 1.0)
     batch = {k: v.to(model.device) for k, v in batch.items()}
     with torch.set_grad_enabled(grad):
         output = model(**batch)
 
-    logits = output.logits
+    logits = output.logits / temperature # apply temperature scaling to logits before softmax
     bsz, seq_len, V = logits.shape
     log_probs = torch.nn.functional.log_softmax(logits, dim=-1)[:, :-1, :]
     # ^ we don't predict next token for last token, bsz x seq_len-1 x V
@@ -146,7 +148,7 @@ def tokenwise_logprobs(model, batch, grad=False, return_labels=False):
     return (log_probs_batch, labels_batch) if return_labels else log_probs_batch
 
 
-def tokenwise_vocab_logprobs(model, batch, grad=False, return_labels=False):
+def tokenwise_vocab_logprobs(model, batch, grad=False, return_labels=False, **kwargs):
     """Get vocabulary-wise log probabilities for each token in the sequence.
 
     Returns:
@@ -154,11 +156,12 @@ def tokenwise_vocab_logprobs(model, batch, grad=False, return_labels=False):
         for each sequence, where N is the length of labeled tokens and V is vocab size.
         labels_batch (List[Tensor]): List of tensors of length N. Returned only if return_labels is True
     """
+    temperature = kwargs.get("output_temperature", 1.0)
     batch = {k: v.to(model.device) for k, v in batch.items()}
     with torch.set_grad_enabled(grad):
         output = model(**batch)
 
-    logits = output.logits
+    logits = output.logits / temperature # apply temperature scaling to logits before softmax
     bsz, seq_len, V = logits.shape
     log_probs = torch.nn.functional.log_softmax(logits, dim=-1)[
         :, :-1, :
@@ -365,7 +368,7 @@ def evaluate_mcqa_score(model, batch, **kwargs):
     # Apply temperature scaling before softmax. argmax is invariant to T,
     # so the predicted choice is unchanged — only the probability distribution is.
     scaled_option_logits = option_logits / temperature
-    option_probs = torch.nn.functional.softmax(scaled_option_logits, dim=-1).cpu().float().tolist()
+    option_probs = torch.nn.functional.softmax(scaled_option_logits, dim=-1).float().cpu().float().tolist()
     selected_options = torch.argmax(option_logits, dim=-1)
     generated_choices = [f" {chr(65 + option.item())}" for option in selected_options]
 

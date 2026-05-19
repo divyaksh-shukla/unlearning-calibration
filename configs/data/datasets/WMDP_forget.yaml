@@ -3,7 +3,8 @@ WMDP_forget:
   args:
     hf_args:
       path: "text"
-      data_files: "data/wmdp/wmdp-corpora/cyber-forget-corpus.jsonl"
+      # data_files: "data/wmdp/wmdp-corpora/cyber-forget-corpus.jsonl"
       split: "train"
+      name: ""
     text_key: "text"
     max_length: 512

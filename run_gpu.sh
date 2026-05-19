@@ -21,7 +21,7 @@ CONDA_ENV_PATH="${CONDA_ENV_PATH:-/DATA3/divyaksh/miniconda3/envs/open_unlearnin
 CODE_DIR="${CODE_DIR:-$NAS_ROOT/Projects/unlearning/unlearning-calibration}"
 LOG_DIR="${LOG_DIR:-$CODE_DIR/tty_logs}"                         # resolved after arg parsing; defaults to $CODE_DIR/logs
 CONDA_SH="${CONDA_SH:-/DATA3/divyaksh/miniconda3/etc/profile.d/conda.sh}"
-HF_HOME="/DATA3/divyaksh/.cache/huggingface/hub"  # HuggingFace cache dir (models, datasets, etc.)
+HF_HOME="/DATADIV/.cache/huggingface/hub"  # HuggingFace cache dir (models, datasets, etc.)
 
 MODE="ssh"            # ssh | detach | live
 SCRIPT=""             # script to run (relative to CODE_DIR or absolute)

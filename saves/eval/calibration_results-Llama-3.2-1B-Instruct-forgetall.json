@@ -1,45 +1,5 @@
 [
     {
-        "task": "relu_Llama-3.2-1B-Instruct_pretrained_retain90_nochat",
-        "checkpoint": 0,
-        "key": "retain_mcqa_prob",
-        "accuracy": 0.6713888888888889,
-        "f1": 0.6767981514649498,
-        "brier": 0.42901540404884686,
-        "ece": 0.05480246062907909,
-        "mce": 0.1213358094294866
-    },
-    {
-        "task": "relu_Llama-3.2-1B-Instruct_pretrained_retain90_nochat",
-        "checkpoint": 0,
-        "key": "forget_mcqa_prob",
-        "accuracy": 0.6541353383458647,
-        "f1": 0.6535884362657719,
-        "brier": 0.4266995782344857,
-        "ece": 0.09626492148353939,
-        "mce": 0.2966017425060272
-    },
-    {
-        "task": "relu_Llama-3.2-1B-Instruct_pretrained_retain95_nochat",
-        "checkpoint": 0,
-        "key": "retain_mcqa_prob",
-        "accuracy": 0.6720189523558832,
-        "f1": 0.6790609289069006,
-        "brier": 0.4225781537616725,
-        "ece": 0.06059875921156257,
-        "mce": 0.28527900874614714
-    },
-    {
-        "task": "relu_Llama-3.2-1B-Instruct_pretrained_retain95_nochat",
-        "checkpoint": 0,
-        "key": "forget_mcqa_prob",
-        "accuracy": 0.63,
-        "f1": 0.6248435935935936,
-        "brier": 0.4714180876005913,
-        "ece": 0.08169737070798878,
-        "mce": 0.29807472229003906
-    },
-    {
         "task": "relu_Llama-3.2-1B-Instruct_pretrained_retain99_nochat",
         "checkpoint": 0,
         "key": "retain_mcqa_prob",
@@ -58,46 +18,6 @@
         "brier": 0.433023244145238,
         "ece": 0.10856415927410125,
         "mce": 0.30298544466495514
-    },
-    {
-        "task": "relu_Llama-3.2-1B-Instruct_full_retain90_nochat",
-        "checkpoint": 0,
-        "key": "retain_mcqa_prob",
-        "accuracy": 0.7355555555555555,
-        "f1": 0.7405438731529973,
-        "brier": 0.40682687962757846,
-        "ece": 0.15401207580334608,
-        "mce": 0.30782206094901976
-    },
-    {
-        "task": "relu_Llama-3.2-1B-Instruct_full_retain90_nochat",
-        "checkpoint": 0,
-        "key": "forget_mcqa_prob",
-        "accuracy": 0.7493734335839599,
-        "f1": 0.7493431004184671,
-        "brier": 0.37657626409923756,
-        "ece": 0.14123604411170598,
-        "mce": 0.3881028890609741
-    },
-    {
-        "task": "relu_Llama-3.2-1B-Instruct_full_retain95_nochat",
-        "checkpoint": 0,
-        "key": "retain_mcqa_prob",
-        "accuracy": 0.7417741510923928,
-        "f1": 0.7462775970665423,
-        "brier": 0.3962720505093705,
-        "ece": 0.14609742653341662,
-        "mce": 0.32589675669364115
-    },
-    {
-        "task": "relu_Llama-3.2-1B-Instruct_full_retain95_nochat",
-        "checkpoint": 0,
-        "key": "forget_mcqa_prob",
-        "accuracy": 0.72,
-        "f1": 0.7187526188333968,
-        "brier": 0.47274628282271236,
-        "ece": 0.18392805650830268,
-        "mce": 0.3954754563478323
     },
     {
         "task": "relu_Llama-3.2-1B-Instruct_full_retain99_nochat",
@@ -120,46 +40,6 @@
         "mce": 0.5360370576381683
     },
     {
-        "task": "relu_Llama-3.2-1B-Instruct_retain90_nochat",
-        "checkpoint": 0,
-        "key": "retain_mcqa_prob",
-        "accuracy": 0.7316666666666667,
-        "f1": 0.7359773780801528,
-        "brier": 0.4067348877234177,
-        "ece": 0.15658494248158394,
-        "mce": 0.3170188074074094
-    },
-    {
-        "task": "relu_Llama-3.2-1B-Instruct_retain90_nochat",
-        "checkpoint": 0,
-        "key": "forget_mcqa_prob",
-        "accuracy": 0.706766917293233,
-        "f1": 0.7050628715055606,
-        "brier": 0.4500555495303068,
-        "ece": 0.16014126443623897,
-        "mce": 0.39631497859954834
-    },
-    {
-        "task": "relu_Llama-3.2-1B-Instruct_retain95_nochat",
-        "checkpoint": 0,
-        "key": "retain_mcqa_prob",
-        "accuracy": 0.7441431955777836,
-        "f1": 0.7491056392669122,
-        "brier": 0.3813412555862169,
-        "ece": 0.13541527212874202,
-        "mce": 0.3222093744277954
-    },
-    {
-        "task": "relu_Llama-3.2-1B-Instruct_retain95_nochat",
-        "checkpoint": 0,
-        "key": "forget_mcqa_prob",
-        "accuracy": 0.665,
-        "f1": 0.6661419653489197,
-        "brier": 0.5203974027945659,
-        "ece": 0.20139687389135358,
-        "mce": 0.3883451521396637
-    },
-    {
         "task": "relu_Llama-3.2-1B-Instruct_retain99_nochat",
         "checkpoint": 0,
         "key": "retain_mcqa_prob",
@@ -178,5 +58,105 @@
         "brier": 0.4024453175341048,
         "ece": 0.13920513093471526,
         "mce": 0.6773229241371155
+    },
+    {
+        "task": "tofu_Llama-3.2-1B-Instruct_forget01_GradAscent/checkpoint-10",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.3233139681737813,
+        "f1": 0.23376110389748125,
+        "brier": 0.9898812929241887,
+        "ece": 0.4129000784592606,
+        "mce": 0.5163071883412509
+    },
+    {
+        "task": "tofu_Llama-3.2-1B-Instruct_forget01_GradAscent/checkpoint-10",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.325,
+        "f1": 0.19671261930010603,
+        "brier": 0.9642824583905332,
+        "ece": 0.4052304469048977,
+        "mce": 0.6357005370987786
+    },
+    {
+        "task": "tofu_Llama-3.2-1B-Instruct_forget01_GradDiff/checkpoint-10",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.6984086890628947,
+        "f1": 0.7001571613904742,
+        "brier": 0.5020980691507951,
+        "ece": 0.21739173535446718,
+        "mce": 0.3747152161598206
+    },
+    {
+        "task": "tofu_Llama-3.2-1B-Instruct_forget01_GradDiff/checkpoint-10",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.7,
+        "f1": 0.7112010796221322,
+        "brier": 0.5110143235167582,
+        "ece": 0.22326039075851442,
+        "mce": 0.6403242647647858
+    },
+    {
+        "task": "tofu_Llama-3.2-1B-Instruct_forget01_NPO/checkpoint-10",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.6122758272290982,
+        "f1": 0.6146984968396231,
+        "brier": 0.5959940743205753,
+        "ece": 0.23426817615365222,
+        "mce": 0.3432721383125942
+    },
+    {
+        "task": "tofu_Llama-3.2-1B-Instruct_forget01_NPO/checkpoint-10",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.65,
+        "f1": 0.655448717948718,
+        "brier": 0.5742249857571577,
+        "ece": 0.24830546528100972,
+        "mce": 0.4558823903401693
+    },
+    {
+        "task": "tofu_Llama-3.2-1B-Instruct_forget01_RMU/checkpoint-10",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.6900732508209144,
+        "f1": 0.6963784928669261,
+        "brier": 0.4477282730418274,
+        "ece": 0.15219796662922008,
+        "mce": 0.2898967065421708
+    },
+    {
+        "task": "tofu_Llama-3.2-1B-Instruct_forget01_RMU/checkpoint-10",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.375,
+        "f1": 0.3825927109974424,
+        "brier": 0.8568714628129361,
+        "ece": 0.3714545279741287,
+        "mce": 0.7046079337596893
+    },
+    {
+        "task": "tofu_Llama-3.2-1B-Instruct_forget01_GradAscentKLUniform/checkpoint-10",
+        "checkpoint": 0,
+        "key": "retain_mcqa_prob",
+        "accuracy": 0.46400606213690326,
+        "f1": 0.4131873488496739,
+        "brier": 0.6997540814402954,
+        "ece": 0.1522841200544907,
+        "mce": 0.18424742650059822
+    },
+    {
+        "task": "tofu_Llama-3.2-1B-Instruct_forget01_GradAscentKLUniform/checkpoint-10",
+        "checkpoint": 0,
+        "key": "forget_mcqa_prob",
+        "accuracy": 0.475,
+        "f1": 0.36568627450980395,
+        "brier": 0.6319669789773019,
+        "ece": 0.18471301943063737,
+        "mce": 0.6382592717806498
     }
 ]
