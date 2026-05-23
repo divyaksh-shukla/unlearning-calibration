@@ -350,14 +350,16 @@ def evaluate_mcqa_score(model, batch, **kwargs):
     T < 1 sharpens it. T = 1.0 (default) leaves logits unchanged.
     """
     tokenizer = kwargs.get("tokenizer")
-    temperature = kwargs.get("output_temperature", 1.0)
+    if "output_temperature" not in kwargs:
+        raise ValueError("output_temperature must be provided in kwargs for evaluate_mcqa_score")
+    temperature = kwargs["output_temperature"]
     if temperature <= 0:
         raise ValueError(f"Temperature must be positive, got {temperature}")
 
     batch = {k: v.to(model.device) for k, v in batch.items()}
     with torch.no_grad():
         output = model(**batch)
-    logits = output.logits
+    logits = output.logits / temperature # apply temperature scaling to logits before softmax
     labels = batch["labels"]
     # convert -100 labels to tokenizer.eos_token_id for decoding
     labels = torch.where(labels == IGNORE_INDEX, tokenizer.eos_token_id, labels)

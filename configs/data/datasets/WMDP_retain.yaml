@@ -2,8 +2,9 @@ WMDP_retain:
   handler: PretrainingDataset
   args:
     hf_args:
-      path: "text"
-      data_files: "data/wmdp/wmdp-corpora/cyber-retain-corpus.jsonl"
+      path: "cais/wmdp-corpora"
+      # data_files: "data/wmdp/wmdp-corpora/cyber-retain-corpus.jsonl"
+      name: "cyber-retain-corpus"
       split: "train"
     text_key: "text"
     max_length: 512

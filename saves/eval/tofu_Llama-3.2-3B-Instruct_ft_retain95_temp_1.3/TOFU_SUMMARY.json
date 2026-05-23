@@ -1,3 +1,8 @@
 {
-    "forget_truth_ratio": 0.4908042069769109
+    "forget_truth_ratio": 0.5413217566602836,
+    "mia_gradnorm": 0.8523125,
+    "mia_loss": 0.9918750000000001,
+    "mia_min_k": 0.993725,
+    "mia_min_k_plus_plus": 0.982325,
+    "mia_zlib": 0.9664250000000001
 }

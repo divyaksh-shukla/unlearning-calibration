@@ -1,0 +1,84 @@
+{
+    "Forget01": {
+        "Pretrained": {
+            "forget_mcqa_prob": 0.7,
+            "forget_truth_ratio": 0.7632192690159488,
+            "mia_min_k": 0.5125,
+            "mia_min_k_plus_plus": 0.566875,
+            "privleak": -1.1406844104150684,
+            "retain_mcqa_prob": 0.7208891134124779
+        },
+        "Full": {
+            "forget_mcqa_prob": 0.85,
+            "forget_truth_ratio": 0.4941917993687273,
+            "mia_min_k": 1.0,
+            "mia_min_k_plus_plus": 0.989375,
+            "privleak": -99.99999998,
+            "retain_mcqa_prob": 0.8391007830260167
+        },
+        "Retained": {
+            "forget_mcqa_prob": 0.775,
+            "forget_truth_ratio": 0.6700604147533114,
+            "mia_min_k": 0.506875,
+            "mia_min_k_plus_plus": 0.461875,
+            "privleak": -1.3749999997249929,
+            "retain_mcqa_prob": 0.8378378378378378
+        },
+        "GradAscent": {},
+        "GradDiff": {},
+        "NPO": {},
+        "RMU": {},
+        "FocalUL": {}
+    },
+    "Forget05": {
+        "Pretrained": {
+            "forget_mcqa_prob": 0.665,
+            "forget_truth_ratio": 0.7454933296854962,
+            "mia_min_k": 0.32397499999999996,
+            "mia_min_k_plus_plus": 0.423525,
+            "privleak": 5.595907528023149,
+            "retain_mcqa_prob": 0.7172940247433535
+        },
+        "Full": {},
+        "Retained": {
+            "forget_mcqa_prob": 0.74,
+            "forget_truth_ratio": 0.6306819640347147,
+            "mia_min_k": 0.3598,
+            "mia_min_k_plus_plus": 0.454525,
+            "privleak": 28.039999994391994,
+            "retain_mcqa_prob": 0.8436430639642011
+        },
+        "GradAscent": {},
+        "GradDiff": {},
+        "NPO": {},
+        "RMU": {},
+        "FocalUL": {}
+    },
+    "Forget10": {
+        "Pretrained": {
+            "forget_truth_ratio": 0.7453215247649331,
+            "mia_min_k": 0.3227875,
+            "mia_min_k_plus_plus": 0.41188749999999996,
+            "privleak": 8.273877329452379
+        },
+        "Full": {
+            "forget_truth_ratio": 0.4822748067387741,
+            "mia_min_k": 0.99663125,
+            "mia_min_k_plus_plus": 0.995,
+            "privleak": -99.32624998013473
+        },
+        "Retained": {
+            "forget_mcqa_prob": 0.7568922305764411,
+            "forget_truth_ratio": 0.6473523459864994,
+            "mia_min_k": 0.37453749999999997,
+            "mia_min_k_plus_plus": 0.45498124999999995,
+            "privleak": 25.092499994981505,
+            "retain_mcqa_prob": 0.8327777777777777
+        },
+        "GradAscent": {},
+        "GradDiff": {},
+        "NPO": {},
+        "RMU": {},
+        "FocalUL": {}
+    }
+}

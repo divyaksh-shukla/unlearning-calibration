@@ -12,28 +12,28 @@ models=(
     # "Llama-3.1-8B-Instruct"
 )
 trainers_experiments=(
-    # "GradAscent unlearn/tofu/default.yaml"
-    # "GradDiff unlearn/tofu/default.yaml"
-    # "NPO unlearn/tofu/default.yaml"
+    "GradAscent unlearn/tofu/default.yaml"
+    "GradDiff unlearn/tofu/default.yaml"
+    "NPO unlearn/tofu/default.yaml"
     # "DPO unlearn/tofu/idk.yaml"
-    # "RMU  unlearn/tofu/default.yaml"
-    # "GradDiffKLUniform  unlearn/tofu/default.yaml"
-    "PDU  unlearn/tofu/default.yaml"
-    "SatImp  unlearn/tofu/default.yaml"
-    "SimNPO  unlearn/tofu/default.yaml"
-    "UNDIAL  unlearn/tofu/default.yaml"
-    "WGA  unlearn/tofu/default.yaml"
-    "CEU  unlearn/tofu/default.yaml"
+    "RMU  unlearn/tofu/default.yaml"
+    "GradDiffKLUniform  unlearn/tofu/default.yaml"
+    # "PDU  unlearn/tofu/default.yaml"
+    # "SatImp  unlearn/tofu/default.yaml"
+    # "SimNPO  unlearn/tofu/default.yaml"
+    # "UNDIAL  unlearn/tofu/default.yaml"
+    # "WGA  unlearn/tofu/default.yaml"
+    # "CEU  unlearn/tofu/default.yaml"
 )
 splits=(
-    "forget01 holdout01 retain99"
-    "forget05 holdout05 retain95"
+    # "forget01 holdout01 retain99"
+    # "forget05 holdout05 retain95"
     "forget10 holdout10 retain90"
 )
 
 
 per_device_train_batch_size=1 
-gradient_accumulation_steps=16 # on one gpus would make effective batch size 32
+gradient_accumulation_steps=32 # on one gpus would make effective batch size 32
 
 
 ########################################################################################################################
@@ -56,6 +56,7 @@ for split in "${splits[@]}"; do
             echo ${task_name}: Unlearning ${model_path} using ${trainer}
 
             # Unlearn
+            CUDA_VISIBLE_DEVICES=1 \
             accelerate launch --config_file configs/accelerate/default_config.yaml --main_process_port $MASTER_PORT \
             src/train.py --config-name=unlearn.yaml \
             experiment=${experiment} \

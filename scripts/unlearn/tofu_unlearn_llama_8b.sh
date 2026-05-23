@@ -17,7 +17,7 @@ trainers_experiments=(
     "NPO unlearn/tofu/default.yaml"
     # "DPO unlearn/tofu/idk.yaml"
     "RMU  unlearn/tofu/default.yaml"
-    "GradAscentKLUniform unlearn/tofu/default.yaml"
+    "GradDiffKLUniform unlearn/tofu/default.yaml"
 )
 splits=(
     "forget01 holdout01 retain99"
@@ -50,7 +50,7 @@ for split in "${splits[@]}"; do
             echo ${task_name}: Unlearning ${model_path} using ${trainer}
 
             # Unlearn
-            # CUDA_VISIBLE_DEVICES=2 \
+            # CUDA_VISIBLE_DEVICES=1 \
             accelerate launch --config_file configs/accelerate/default_config.yaml --main_process_port $MASTER_PORT \
             src/train.py --config-name=unlearn.yaml \
             experiment=${experiment} \

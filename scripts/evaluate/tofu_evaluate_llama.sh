@@ -5,7 +5,7 @@ echo "Master Port: $MASTER_PORT"
 
 
 models=(
-    "Llama-3.2-1B-Instruct"
+    # "Llama-3.2-1B-Instruct"
     "Llama-3.2-3B-Instruct"
     # "Llama-3.1-8B-Instruct"
     # "phi-1_5"
@@ -14,17 +14,19 @@ per_device_train_batch_size=4 # Effective batch size 32 on two GPUs with gradent
 
 splits=(
     "forget10 holdout10 retain90"
-    "forget05 holdout05 retain95"
-    "forget01 holdout01 retain99"
+    # "forget05 holdout05 retain95"
+    # "forget01 holdout01 retain99"
 )
 
 output_temperatures=(
-    # 0.7
-    # 1.0
+    4
+    0.3
     1.3
+    0.5
+    0.7
+    # 1.0
     2
     3
-    4
 )
 
 
@@ -45,34 +47,36 @@ for split in "${splits[@]}"; do
             holdout_split=${holdout_split} \
             task_name=tofu_${model}_${retain_split}_temp_${output_temperature} \
             model=${model} \
+            output_temperature=${output_temperature} \
             model.model_args.pretrained_model_name_or_path=open-unlearning/tofu_${model}_${retain_split}
         done
     done
 done
 
 
-########################################################################################################################
-############################################## PRETRAINED TOFU #########################################################
-########################################################################################################################
+# ########################################################################################################################
+# ############################################## PRETRAINED TOFU #########################################################
+# ########################################################################################################################
 
-for split in "${splits[@]}"; do
-    forget_split=$(echo $split | cut -d' ' -f1)
-    holdout_split=$(echo $split | cut -d' ' -f2)
-    retain_split=$(echo $split | cut -d' ' -f3)
+# for split in "${splits[@]}"; do
+#     forget_split=$(echo $split | cut -d' ' -f1)
+#     holdout_split=$(echo $split | cut -d' ' -f2)
+#     retain_split=$(echo $split | cut -d' ' -f3)
     
-    for model in "${models[@]}"; do
-        for output_temperature in "${output_temperatures[@]}"; do
-            python src/eval.py experiment=eval/tofu/default.yaml \
-            forget_split=${forget_split} \
-            retain_split=${retain_split} \
-            holdout_split=${holdout_split} \
-            task_name=tofu_${model}_pretrained_${retain_split}_temp_${output_temperature} \
-            model=${model} \
-            retain_logs_path=saves/eval/tofu_${model}_${retain_split}_temp_${output_temperature}/TOFU_EVAL.json \
-            model.model_args.pretrained_model_name_or_path=meta-llama/${model}
-        done
-    done
-done
+#     for model in "${models[@]}"; do
+#         for output_temperature in "${output_temperatures[@]}"; do
+#             python src/eval.py experiment=eval/tofu/default.yaml \
+#             forget_split=${forget_split} \
+#             retain_split=${retain_split} \
+#             holdout_split=${holdout_split} \
+#             task_name=tofu_${model}_pretrained_${retain_split}_temp_${output_temperature} \
+#             model=${model} \
+#             output_temperature=${output_temperature} \
+#             retain_logs_path=saves/eval/tofu_${model}_${retain_split}_temp_${output_temperature}/TOFU_EVAL.json \
+#             model.model_args.pretrained_model_name_or_path=meta-llama/${model}
+#         done
+#     done
+# done
 
 
 ########################################################################################################################
@@ -92,6 +96,7 @@ for split in "${splits[@]}"; do
             holdout_split=${holdout_split} \
             task_name=tofu_${model}_ft_${retain_split}_temp_${output_temperature} \
             model=${model} \
+            output_temperature=${output_temperature} \
             retain_logs_path=saves/eval/tofu_${model}_${retain_split}_temp_${output_temperature}/TOFU_EVAL.json \
             model.model_args.pretrained_model_name_or_path=open-unlearning/tofu_${model}_full
         done

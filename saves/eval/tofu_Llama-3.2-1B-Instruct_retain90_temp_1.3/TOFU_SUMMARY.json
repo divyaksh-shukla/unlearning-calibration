@@ -1,11 +1,11 @@
 {
     "forget_mcqa_prob": 0.7042606516290727,
-    "forget_truth_ratio": 0.6566225913095736,
+    "forget_truth_ratio": 0.7018346571290032,
     "mia_gradnorm": 0.35277187499999996,
-    "mia_loss": 0.38793125000000006,
-    "mia_min_k": 0.37614375,
+    "mia_loss": 0.38810625,
+    "mia_min_k": 0.37485625,
     "mia_min_k_plus_plus": 0.4143499999999999,
-    "mia_zlib": 0.3063874999999999,
-    "privleak": 24.77124999504575,
+    "mia_zlib": 0.30391250000000003,
+    "privleak": 25.02874999499425,
     "retain_mcqa_prob": 0.7333333333333333
 }

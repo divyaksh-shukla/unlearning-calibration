@@ -2,9 +2,9 @@ WMDP_forget:
   handler: PretrainingDataset
   args:
     hf_args:
-      path: "text"
+      path: "cais/wmdp-corpora"
       # data_files: "data/wmdp/wmdp-corpora/cyber-forget-corpus.jsonl"
+      name: "cyber-forget-corpus"
       split: "train"
-      name: ""
     text_key: "text"
     max_length: 512

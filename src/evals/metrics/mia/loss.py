@@ -12,7 +12,8 @@ class LOSSAttack(Attack):
     
     def compute_batch_values(self, batch):
         """Compute probabilities and losses for the batch."""
-        return evaluate_probability(self.model, batch, output_temperature=self.output_temperature)
+        kwargs = {"output_temperature": self.output_temperature}
+        return evaluate_probability(self.model, batch, **kwargs)
 
     def compute_score(self, sample_stats):
         """Return the average loss for the sample."""

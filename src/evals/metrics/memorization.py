@@ -24,10 +24,11 @@ def probability(model, **kwargs):
     data = kwargs["data"]
     collator = kwargs["collators"]
     batch_size = kwargs["batch_size"]
+    output_temperature = kwargs.get("output_temperature", 1.0)
 
     dataloader = DataLoader(data, batch_size=batch_size, collate_fn=collator)
 
-    fun_args = {}
+    fun_args = {"output_temperature": output_temperature}
     scores_by_index = run_batchwise_evals(
         model, dataloader, evaluate_probability, fun_args, "Calculating loss"
     )
@@ -277,10 +278,11 @@ def mcqa_performance(model, **kwargs):
     collator = kwargs["collators"]
     batch_size = kwargs["batch_size"]
     tokenizer = kwargs["tokenizer"]
+    output_temperature = kwargs["output_temperature"]
 
     dataloader = DataLoader(data, batch_size=batch_size, collate_fn=collator)
 
-    fun_args = {"tokenizer": tokenizer}
+    fun_args = {"tokenizer": tokenizer, "output_temperature": output_temperature}
     scores_by_index = run_batchwise_evals(
         model, dataloader, evaluate_mcqa_score, fun_args, "Calculating MCQA performance"
     )

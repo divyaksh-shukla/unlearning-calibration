@@ -94,6 +94,7 @@ class Evaluator:
             kwargs = {
                 "tokenizer": kwargs.get("tokenizer", None),
                 "template_args": kwargs.get("template_args", None),
+                "output_temperature": kwargs.get("output_temperature", 1.0),
             }
             metrics_args = self.eval_cfg.metrics[metric_name]
             _
